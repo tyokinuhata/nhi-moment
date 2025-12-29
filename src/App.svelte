@@ -56,9 +56,19 @@
 
     const noiseData = setupNoiseFilter(imageContainer);
 
+    let elapsed = 0;
+    const transitionDuration = 20;
+
     app.ticker.add((ticker) => {
       updateDisplacementFilter(ticker, dispSprite, displacementFilter, BASE_X, BASE_Y);
       updateNoiseFilter(app, noiseData);
+
+      elapsed += ticker.deltaTime / 60;
+      if (elapsed < transitionDuration) {
+        sprite2.alpha = elapsed / transitionDuration;
+      } else {
+        sprite2.alpha = 1;
+      }
     });
   });
 </script>
