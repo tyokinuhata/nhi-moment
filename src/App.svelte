@@ -1,6 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Application, Assets, Sprite } from 'pixi.js';
+  import { Application, Assets, Sprite, Container } from 'pixi.js';
+  import { setupRGBSplitFilter } from './filters/rgbSplitFilter';
+  import { setupDisplacementFilter, updateDisplacementFilter } from './filters/displacementFilter';
+  import { setupCRTFilter } from './filters/crtFilter';
+  import { setupNoiseFilter, updateNoiseFilter } from './filters/noiseFilter';
+  import { setupColorMatrixFilter } from './filters/colorMatrixFilter';
 
   let canvas: HTMLDivElement;
 
@@ -36,16 +41,24 @@
     sprite2.y = app.screen.height / 2;
     sprite2.alpha = 0;
 
-    app.stage.addChild(sprite1);
-    app.stage.addChild(sprite2);
+    const imageContainer = new Container();
+    imageContainer.addChild(sprite1);
+    imageContainer.addChild(sprite2);
 
-    const duration = 20000;
-    let elapsed = 0;
+    app.stage.addChild(imageContainer);
+
+    const colorMatrixFilter = setupColorMatrixFilter();
+    const rgbSplitFilter = setupRGBSplitFilter();
+    const { displacementFilter, dispSprite, BASE_X, BASE_Y } = setupDisplacementFilter(app);
+    const crtFilter = setupCRTFilter();
+
+    imageContainer.filters = [colorMatrixFilter, rgbSplitFilter, displacementFilter, crtFilter];
+
+    const noiseData = setupNoiseFilter(imageContainer);
 
     app.ticker.add((ticker) => {
-      elapsed += ticker.deltaMS;
-      const progress = Math.min(elapsed / duration, 1);
-      sprite2.alpha = progress;
+      updateDisplacementFilter(ticker, dispSprite, displacementFilter, BASE_X, BASE_Y);
+      updateNoiseFilter(app, noiseData);
     });
   });
 </script>
