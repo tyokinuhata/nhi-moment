@@ -13,8 +13,8 @@
     const app = new Application();
     await app.init({
       background: '#1099bb',
-      width: 640,
-      height: 480
+      width: 900,
+      height: 675
     });
 
     canvas.appendChild(app.canvas);
@@ -74,54 +74,42 @@
 </script>
 
 <h1>ンヒ体験</h1>
-<div class="crt-tv">
-  <div class="canvas-wrapper" bind:this={canvas}></div>
-</div>
+<div class="canvas-wrapper" bind:this={canvas}></div>
 
 <style>
   :global(body) {
     background: #0a0a0a;
     margin: 0;
-    padding: 20px;
-    height: 100vh;
+    padding: 0 20px 20px 20px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
   }
 
   :global(h1) {
     color: #fff;
-    font-family: monospace;
-    font-size: 4rem;
-    font-weight: bold;
+    font-size: 2.5rem;
+    font-weight: normal;
     text-align: center;
-    margin: 0 0 20px 0;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-  }
-
-  .crt-tv {
-    display: inline-block;
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 60px;
-    box-shadow:
-      0 0 80px rgba(16, 153, 187, 0.15),
-      0 0 40px rgba(16, 153, 187, 0.1),
-      0 20px 60px rgba(0, 0, 0, 0.9);
+    margin: 0;
   }
 
   .canvas-wrapper {
-    border-radius: 40px;
+    max-width: 900px;
+    width: 100%;
+    border-radius: 50px;
     overflow: hidden;
     line-height: 0;
     box-shadow:
-      inset 0 0 20px rgba(0, 0, 0, 0.5),
-      0 0 30px rgba(16, 153, 187, 0.1);
+      0 0 40px rgba(16, 153, 187, 0.2),
+      0 0 80px rgba(16, 153, 187, 0.1);
   }
 
   .canvas-wrapper :global(canvas) {
     display: block;
+    width: 100%;
+    height: auto;
   }
 </style>
