@@ -1,6 +1,6 @@
 import { RGBSplitFilter } from 'pixi-filters';
 
-export function setupRGBSplitFilter() {
+export function setupRGBSplitFilter(): RGBSplitFilter {
   const rgbSplitFilter = new RGBSplitFilter();
   rgbSplitFilter.red = { x: 2, y: 0 };
   rgbSplitFilter.green = { x: 0, y: 0 };

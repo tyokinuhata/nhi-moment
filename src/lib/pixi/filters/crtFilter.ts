@@ -1,6 +1,6 @@
 import { CRTFilter } from 'pixi-filters';
 
-export function setupCRTFilter() {
+export function setupCRTFilter(): CRTFilter {
   const crtFilter = new CRTFilter();
   crtFilter.lineWidth = 1;
   crtFilter.lineContrast = 0.10;

@@ -35,6 +35,7 @@
   .canvas-wrapper {
     width: 100%;
     max-width: 900px;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
     border-radius: 50px;
     box-shadow:
