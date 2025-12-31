@@ -7,35 +7,36 @@
   onMount(() => pixi.setup(canvas));
 </script>
 
-<h1>ンヒ体験</h1>
-<div class="canvas-wrapper" bind:this={canvas}></div>
+<div class="app">
+  <h1 class="title">ンヒ体験</h1>
+  <div class="canvas-wrapper" bind:this={canvas}></div>
+</div>
 
 <style>
   :global(body) {
-    background: #0a0a0a;
     margin: 0;
-    padding: 0 20px 20px 20px;
-    min-height: 100vh;
+    padding: 0;
+    background: #0a0a0a;
+  }
+
+  .title {
+    color: #fff;
+    font-size: 2.5rem;
+  }
+
+  .app {
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
-  :global(h1) {
-    color: #fff;
-    font-size: 2.5rem;
-    font-weight: normal;
-    text-align: center;
-    margin: 0;
-  }
-
   .canvas-wrapper {
-    max-width: 900px;
     width: 100%;
-    border-radius: 50px;
+    max-width: 900px;
     overflow: hidden;
-    line-height: 0;
+    border-radius: 50px;
     box-shadow:
       0 0 40px rgba(16, 153, 187, 0.2),
       0 0 80px rgba(16, 153, 187, 0.1);
