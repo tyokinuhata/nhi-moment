@@ -1,21 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { GraphicsApp } from './lib/graphics';
-  import { BGMPlayer } from './lib/audio/BGMPlayer';
+  import BGMControl from './components/BGMControl.svelte';
 
   let canvas: HTMLDivElement;
 
   onMount(async () => {
     await GraphicsApp.create(canvas);
-
-    const bgmPlayer = BGMPlayer.create();
-    bgmPlayer.play();
   });
 </script>
 
 <div class="app">
   <h1 class="title">ンヒ体験</h1>
   <div class="canvas-wrapper" bind:this={canvas}></div>
+
+  <BGMControl />
 </div>
 
 <style>
