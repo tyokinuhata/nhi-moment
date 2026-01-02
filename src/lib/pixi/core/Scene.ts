@@ -18,8 +18,8 @@ export class Scene {
   }
 
   private async loadTextures(): Promise<void> {
-    const textureBefore = await Assets.load('/01.png');
-    const textureAfter = await Assets.load('/02.png');
+    const textureBefore = await Assets.load('/images/before.png');
+    const textureAfter = await Assets.load('/images/after.png');
 
     this.spriteBefore = Sprite.from(textureBefore);
     this.spriteAfter = Sprite.from(textureAfter);
