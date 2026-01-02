@@ -1,17 +1,12 @@
 import { Application, Container, Ticker } from 'pixi.js';
 import { setupRGBSplitFilter } from '../filters/rgbSplitFilter';
-import { setupDisplacementFilter, updateDisplacementFilter } from '../filters/displacementFilter';
+import { DynamicDisplacementFilter } from '../filters/dynamicDisplacementFilter';
 import { setupCRTFilter } from '../filters/crtFilter';
 import { setupNoiseFilter } from '../filters/noiseFilter';
 import { setupColorMatrixFilter } from '../filters/colorMatrixFilter';
 
 export class FilterPipeline {
-  private displacementData!: {
-    filter: any;
-    sprite: any;
-    baseX: number;
-    baseY: number;
-  };
+  private dynamicDisplacementFilter!: DynamicDisplacementFilter;
 
   private constructor() {}
 
@@ -27,30 +22,18 @@ export class FilterPipeline {
     const crtFilter = setupCRTFilter();
     const noiseFilter = setupNoiseFilter();
 
-    const { displacementFilter, dispSprite, BASE_X, BASE_Y } = setupDisplacementFilter(app);
-    this.displacementData = {
-      filter: displacementFilter,
-      sprite: dispSprite,
-      baseX: BASE_X,
-      baseY: BASE_Y
-    };
+    this.dynamicDisplacementFilter = DynamicDisplacementFilter.create(app);
 
     container.filters = [
       colorMatrixFilter,
       rgbSplitFilter,
       crtFilter,
       noiseFilter,
-      displacementFilter
+      this.dynamicDisplacementFilter.getFilter()
     ];
   }
 
   update(ticker: Ticker): void {
-    updateDisplacementFilter(
-      ticker,
-      this.displacementData.sprite,
-      this.displacementData.filter,
-      this.displacementData.baseX,
-      this.displacementData.baseY
-    );
+    this.dynamicDisplacementFilter.update(ticker);
   }
 }
