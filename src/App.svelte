@@ -1,10 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import * as pixi from './lib/pixi';
+  import { GraphicsApp } from './lib/graphics';
+  import { BGMPlayer } from './lib/audio/BGMPlayer';
 
   let canvas: HTMLDivElement;
 
-  onMount(() => pixi.setup(canvas));
+  onMount(async () => {
+    await GraphicsApp.create(canvas);
+
+    const bgmPlayer = BGMPlayer.create();
+    bgmPlayer.play();
+  });
 </script>
 
 <div class="app">
