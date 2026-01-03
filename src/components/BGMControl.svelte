@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { BGMPlayer } from '../lib/audio/BGMPlayer';
+  import { BGMPlayer } from '../lib/audio';
 
   let bgmPlayer: BGMPlayer;
   let isMuted = true;
