@@ -2,9 +2,11 @@ import { Application } from 'pixi.js';
 import { Scene } from './Scene';
 import { FadeTransition } from './FadeTransition';
 import { FilterPipeline } from './FilterPipeline';
+import { InteractiveViewport } from './InteractiveViewport';
 
 export class GraphicsApp {
   private app!: Application;
+  private interactiveViewport!: InteractiveViewport;
   private scene!: Scene;
   private fadeTransition!: FadeTransition;
   private filterPipeline!: FilterPipeline;
@@ -20,6 +22,9 @@ export class GraphicsApp {
   private async init(canvasElement: HTMLDivElement): Promise<void> {
     await this.setupApp(canvasElement);
     this.scene = await Scene.create(this.app);
+    this.interactiveViewport = InteractiveViewport.create(this.app, this.scene);
+    this.app.stage.addChild(this.interactiveViewport.getViewport());
+    this.interactiveViewport.getViewport().addChild(this.scene.getContainer());
     this.filterPipeline = FilterPipeline.create(this.app, this.scene.getContainer());
     this.fadeTransition = FadeTransition.create(this.scene.getSpriteAfter());
     this.startAnimation();

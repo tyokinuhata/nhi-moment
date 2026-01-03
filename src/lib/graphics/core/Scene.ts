@@ -13,7 +13,7 @@ export class Scene {
     const scene = new Scene();
     await scene.loadTextures();
     scene.positionSprites(app);
-    scene.createContainer(app);
+    scene.createContainer();
     return scene;
   }
 
@@ -43,11 +43,10 @@ export class Scene {
     this.spriteAfter.y = app.screen.height / 2;
   }
 
-  private createContainer(app: Application): void {
+  private createContainer(): void {
     this.imageContainer = new Container();
     this.imageContainer.addChild(this.spriteBefore);
     this.imageContainer.addChild(this.spriteAfter);
-    app.stage.addChild(this.imageContainer);
   }
 
   getContainer(): Container {
