@@ -47,6 +47,7 @@ export class GraphicsApp {
 
   private setupClickHandler(): void {
     this.interactiveViewport.onImageClick((event) => {
+      // console.log(`Clicked position: (${event.x}, ${event.y})`);
       const isAnomaly = this.scene.isAnomalyClicked(event.x, event.y);
       const isAccepted = isAnomaly && this.gameTimer.isWithinTimeLimit(60);
 

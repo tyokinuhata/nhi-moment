@@ -6,5 +6,37 @@
       "y": 391
     },
     "radius": 50
+  },
+  "02": {
+    "hasAnomaly": true,
+    "position": {
+      "x": 364,
+      "y": 410
+    },
+    "radius": 50
+  },
+  "03": {
+    "hasAnomaly": true,
+    "position": {
+      "x": 588,
+      "y": 479
+    },
+    "radius": 50
+  },
+  "04": {
+    "hasAnomaly": true,
+    "position": {
+      "x": 686,
+      "y": 429
+    },
+    "radius": 100
+  },
+  "05": {
+    "hasAnomaly": true,
+    "position": {
+      "x": 811,
+      "y": 471
+    },
+    "radius": 100
   }
 }
