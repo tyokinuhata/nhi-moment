@@ -1,5 +1,6 @@
 <script lang="ts">
   import { anomalyStore } from '../lib/stores/anomalyStore';
+  import Button from './Button.svelte';
 
   function handleYes() {
     anomalyStore.showResult();
@@ -14,8 +15,8 @@
   <div class="modal-content">
     <h2 class="modal-title">怪異を報告しますか？</h2>
     <div class="button-group">
-      <button class="btn btn-yes" on:click={handleYes}>はい</button>
-      <button class="btn btn-no" on:click={handleNo}>いいえ</button>
+      <Button text="はい" onclick={handleYes} />
+      <Button text="いいえ" onclick={handleNo} />
     </div>
   </div>
 </div>
@@ -51,19 +52,5 @@
     display: flex;
     gap: 15px;
     justify-content: center;
-  }
-
-  .btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid #444;
-    background: #222;
-    color: #fff;
-    cursor: pointer;
-  }
-
-  .btn:hover {
-    background: #333;
   }
 </style>

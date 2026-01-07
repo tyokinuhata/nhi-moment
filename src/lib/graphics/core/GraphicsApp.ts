@@ -44,7 +44,7 @@ export class GraphicsApp {
   private setupClickHandler(): void {
     this.interactiveViewport.onImageClick((event) => {
       const isAnomaly = this.scene.isAnomalyClicked(event.x, event.y);
-      anomalyStore.openModal(isAnomaly, { x: event.x, y: event.y });
+      anomalyStore.openModal(isAnomaly);
     });
   }
 
@@ -53,9 +53,5 @@ export class GraphicsApp {
       this.filterPipeline.update(ticker);
       this.fadeTransition.update(ticker);
     });
-  }
-
-  async restartGame(): Promise<void> {
-    // TODO: 次のステップで実装（リザルト画面と合わせて）
   }
 }

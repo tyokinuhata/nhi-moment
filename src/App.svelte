@@ -3,6 +3,7 @@
   import { GraphicsApp } from './lib/graphics';
   import BGMControl from './components/BGMControl.svelte';
   import ConfirmationModal from './components/ConfirmationModal.svelte';
+  import ResultScreen from './components/ResultScreen.svelte';
   import { anomalyStore } from './lib/stores/anomalyStore';
 
   let canvas: HTMLDivElement;
@@ -14,12 +15,17 @@
 
 <div class="app">
   <h1 class="title">ンヒ体験</h1>
-  <div class="canvas-wrapper" bind:this={canvas}></div>
 
-  <BGMControl />
+  {#if $anomalyStore.screen === 'result'}
+    <ResultScreen />
+  {:else}
+    <div class="canvas-wrapper" bind:this={canvas}></div>
 
-  {#if $anomalyStore.showModal}
-    <ConfirmationModal />
+    <BGMControl />
+
+    {#if $anomalyStore.screen === 'modal'}
+      <ConfirmationModal />
+    {/if}
   {/if}
 </div>
 

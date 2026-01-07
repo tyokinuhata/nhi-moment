@@ -1,62 +1,41 @@
 import { writable } from 'svelte/store';
-import type { GraphicsApp } from '../graphics/core/GraphicsApp';
+
+type Screen = 'game' | 'modal' | 'result';
 
 interface AnomalyState {
-  showModal: boolean;
-  showResultScreen: boolean;
+  screen: Screen;
   isAnomaly: boolean | null;
-  clickPosition: { x: number; y: number } | null;
 }
 
 const initialState: AnomalyState = {
-  showModal: false,
-  showResultScreen: false,
-  isAnomaly: null,
-  clickPosition: null
+  screen: 'game',
+  isAnomaly: null
 };
 
 function createAnomalyStore() {
   const { subscribe, set, update } = writable<AnomalyState>(initialState);
 
-  let graphicsAppInstance: GraphicsApp | null = null;
-
   return {
     subscribe,
 
-    openModal: (isAnomaly: boolean, position: { x: number; y: number }) => {
+    openModal: (isAnomaly: boolean) => {
       update(state => ({
         ...state,
-        showModal: true,
-        isAnomaly,
-        clickPosition: position
+        screen: 'modal',
+        isAnomaly
       }));
     },
 
     closeModal: () => {
-      update(state => ({ ...state, showModal: false }));
+      update(state => ({ ...state, screen: 'game' }));
     },
 
     showResult: () => {
-      update(state => ({
-        ...state,
-        showModal: false,
-        showResultScreen: true
-      }));
+      update(state => ({ ...state, screen: 'result' }));
     },
 
     reset: () => {
       set(initialState);
-    },
-
-    setGraphicsApp: (app: GraphicsApp) => {
-      graphicsAppInstance = app;
-    },
-
-    restartGame: async () => {
-      if (graphicsAppInstance) {
-        set(initialState);
-        await graphicsAppInstance.restartGame();
-      }
     }
   };
 }
