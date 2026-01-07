@@ -1,49 +1,34 @@
-import { Application, Bounds } from 'pixi.js';
+import { Application } from 'pixi.js';
 import { Viewport } from 'pixi-viewport';
 import { Scene } from './Scene';
+import { ViewportControls } from './ViewportControls';
+import { ClickDetector } from './ClickDetector';
+import type { ClickEvent } from './ClickDetector';
+
+export type { ClickEvent };
 
 export class InteractiveViewport {
-  private viewport: Viewport;
+  private viewportControls: ViewportControls;
+  private clickDetector: ClickDetector;
 
-  private constructor(viewport: Viewport) {
-    this.viewport = viewport;
+  private constructor(viewportControls: ViewportControls, clickDetector: ClickDetector) {
+    this.viewportControls = viewportControls;
+    this.clickDetector = clickDetector;
   }
 
   static create(app: Application, scene: Scene): InteractiveViewport {
     const bounds = scene.getContainer().getBounds();
-    const viewport = InteractiveViewport.createViewport(app, bounds);
+    const viewportControls = ViewportControls.create(app, bounds);
+    const clickDetector = ClickDetector.create(viewportControls.getViewport());
 
-    InteractiveViewport.setupInteraction(viewport);
-    InteractiveViewport.setupConstraints(viewport);
-
-    return new InteractiveViewport(viewport);
+    return new InteractiveViewport(viewportControls, clickDetector);
   }
 
-  private static createViewport(app: Application, bounds: Bounds): Viewport {
-    return new Viewport({
-      screenWidth: app.screen.width,
-      screenHeight: app.screen.height,
-      worldWidth: bounds.width,
-      worldHeight: bounds.height,
-      events: app.renderer.events
-    });
-  }
-
-  private static setupInteraction(viewport: Viewport): void {
-    viewport
-      .drag()
-      .pinch()
-      .wheel()
-      .decelerate();
-  }
-
-  private static setupConstraints(viewport: Viewport): void {
-    viewport
-      .clampZoom({ minScale: 1.0 })
-      .clamp({ direction: 'all' });
+  onImageClick(handler: (event: ClickEvent) => void): void {
+    this.clickDetector.onImageClick(handler);
   }
 
   getViewport(): Viewport {
-    return this.viewport;
+    return this.viewportControls.getViewport();
   }
 }

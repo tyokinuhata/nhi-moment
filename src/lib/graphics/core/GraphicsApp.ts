@@ -27,6 +27,7 @@ export class GraphicsApp {
     this.interactiveViewport.getViewport().addChild(this.scene.getContainer());
     this.filterPipeline = FilterPipeline.create(this.app, this.scene.getContainer());
     this.fadeTransition = FadeTransition.create(this.scene.getSpriteAfter());
+    this.setupClickHandler();
     this.startAnimation();
   }
 
@@ -37,6 +38,18 @@ export class GraphicsApp {
       resizeTo: canvasElement
     });
     canvasElement.appendChild(this.app.canvas);
+  }
+
+  private setupClickHandler(): void {
+    this.interactiveViewport.onImageClick((event) => {
+      const isAnomaly = this.scene.isAnomalyClicked(event.x, event.y);
+
+      console.log('Clicked position:', {
+        x: event.x,
+        y: event.y,
+        isAnomaly: isAnomaly
+      });
+    });
   }
 
   private startAnimation(): void {

@@ -1,25 +1,45 @@
 import { Application, Assets, Sprite, Container } from 'pixi.js';
 
+interface Anomaly {
+  hasAnomaly: boolean;
+  position: {
+    x: number;
+    y: number;
+  };
+  radius: number;
+}
+
 export class Scene {
   private static readonly CENTER_ANCHOR = 0.5;
 
   private imageContainer!: Container;
   private spriteBefore!: Sprite;
   private spriteAfter!: Sprite;
+  private anomaly!: Anomaly;
+  private currentImageSetId!: string;
 
   private constructor() {}
 
   static async create(app: Application): Promise<Scene> {
     const scene = new Scene();
+    await scene.selectRandomImageSet();
     await scene.loadTextures();
     scene.positionSprites(app);
     scene.createContainer();
     return scene;
   }
 
+  private async selectRandomImageSet(): Promise<void> {
+    const anomaliesConfig = await (await fetch('/images/anomalies.json')).json();
+    const imageSetIds = Object.keys(anomaliesConfig);
+    const randomIndex = Math.floor(Math.random() * imageSetIds.length);
+    this.currentImageSetId = imageSetIds[randomIndex];
+    this.anomaly = anomaliesConfig[this.currentImageSetId];
+  }
+
   private async loadTextures(): Promise<void> {
-    const textureBefore = await Assets.load('/images/before.png');
-    const textureAfter = await Assets.load('/images/after.png');
+    const textureBefore = await Assets.load(`/images/${this.currentImageSetId}/before.png`);
+    const textureAfter = await Assets.load(`/images/${this.currentImageSetId}/after.png`);
 
     this.spriteBefore = Sprite.from(textureBefore);
     this.spriteAfter = Sprite.from(textureAfter);
@@ -55,5 +75,17 @@ export class Scene {
 
   getSpriteAfter(): Sprite {
     return this.spriteAfter;
+  }
+
+  isAnomalyClicked(x: number, y: number): boolean {
+    if (!this.anomaly.hasAnomaly) {
+      return false;
+    }
+
+    const dx = x - this.anomaly.position.x;
+    const dy = y - this.anomaly.position.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+
+    return distance <= this.anomaly.radius;
   }
 }

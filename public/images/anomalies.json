@@ -1,0 +1,10 @@
+{
+  "01": {
+    "hasAnomaly": true,
+    "position": {
+      "x": 426,
+      "y": 391
+    },
+    "radius": 50
+  }
+}
