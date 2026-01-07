@@ -2,14 +2,16 @@ import { writable } from 'svelte/store';
 
 type Screen = 'game' | 'modal' | 'result';
 
-interface AnomalyState {
+export interface AnomalyState {
   screen: Screen;
   isAnomaly: boolean | null;
+  isAccepted: boolean | null;
 }
 
 const initialState: AnomalyState = {
   screen: 'game',
-  isAnomaly: null
+  isAnomaly: null,
+  isAccepted: null
 };
 
 function createAnomalyStore() {
@@ -18,11 +20,12 @@ function createAnomalyStore() {
   return {
     subscribe,
 
-    openModal: (isAnomaly: boolean) => {
+    openModal: (isAnomaly: boolean, isAccepted: boolean) => {
       update(state => ({
         ...state,
         screen: 'modal',
-        isAnomaly
+        isAnomaly,
+        isAccepted
       }));
     },
 

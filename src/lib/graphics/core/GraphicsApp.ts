@@ -3,6 +3,7 @@ import { Scene } from './Scene';
 import { FadeTransition } from './FadeTransition';
 import { FilterPipeline } from './FilterPipeline';
 import { InteractiveViewport } from './InteractiveViewport';
+import { GameTimer } from './GameTimer';
 import { anomalyStore } from '../../stores/anomalyStore';
 
 export class GraphicsApp {
@@ -11,6 +12,7 @@ export class GraphicsApp {
   private scene!: Scene;
   private fadeTransition!: FadeTransition;
   private filterPipeline!: FilterPipeline;
+  private gameTimer!: GameTimer;
 
   private constructor() {}
 
@@ -30,6 +32,8 @@ export class GraphicsApp {
     this.fadeTransition = FadeTransition.create(this.scene.getSpriteAfter());
     this.setupClickHandler();
     this.startAnimation();
+    this.gameTimer = new GameTimer();
+    this.gameTimer.start();
   }
 
   private async setupApp(canvasElement: HTMLDivElement): Promise<void> {
@@ -44,7 +48,9 @@ export class GraphicsApp {
   private setupClickHandler(): void {
     this.interactiveViewport.onImageClick((event) => {
       const isAnomaly = this.scene.isAnomalyClicked(event.x, event.y);
-      anomalyStore.openModal(isAnomaly);
+      const isAccepted = isAnomaly && this.gameTimer.isWithinTimeLimit(60);
+
+      anomalyStore.openModal(isAnomaly, isAccepted);
     });
   }
 
