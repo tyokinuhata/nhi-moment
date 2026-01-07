@@ -3,6 +3,7 @@ import { Scene } from './Scene';
 import { FadeTransition } from './FadeTransition';
 import { FilterPipeline } from './FilterPipeline';
 import { InteractiveViewport } from './InteractiveViewport';
+import { anomalyStore } from '../../stores/anomalyStore';
 
 export class GraphicsApp {
   private app!: Application;
@@ -43,12 +44,7 @@ export class GraphicsApp {
   private setupClickHandler(): void {
     this.interactiveViewport.onImageClick((event) => {
       const isAnomaly = this.scene.isAnomalyClicked(event.x, event.y);
-
-      console.log('Clicked position:', {
-        x: event.x,
-        y: event.y,
-        isAnomaly: isAnomaly
-      });
+      anomalyStore.openModal(isAnomaly, { x: event.x, y: event.y });
     });
   }
 
@@ -57,5 +53,9 @@ export class GraphicsApp {
       this.filterPipeline.update(ticker);
       this.fadeTransition.update(ticker);
     });
+  }
+
+  async restartGame(): Promise<void> {
+    // TODO: 次のステップで実装（リザルト画面と合わせて）
   }
 }

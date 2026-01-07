@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import { GraphicsApp } from './lib/graphics';
   import BGMControl from './components/BGMControl.svelte';
+  import ConfirmationModal from './components/ConfirmationModal.svelte';
+  import { anomalyStore } from './lib/stores/anomalyStore';
 
   let canvas: HTMLDivElement;
 
@@ -15,6 +17,10 @@
   <div class="canvas-wrapper" bind:this={canvas}></div>
 
   <BGMControl />
+
+  {#if $anomalyStore.showModal}
+    <ConfirmationModal />
+  {/if}
 </div>
 
 <style>
