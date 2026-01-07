@@ -2,10 +2,10 @@ import { Howl } from 'howler';
 
 export class BGMPlayer {
   private static readonly BGM_FILES = [
-    '/audio/distant_apartment_drone_1.mp3',
-    '/audio/distant_apartment_drone_2.mp3',
-    '/audio/ghost_mall_pa_system_1.mp3',
-    '/audio/ghost_mall_pa_system_2.mp3'
+    `${import.meta.env.BASE_URL}audio/distant_apartment_drone_1.mp3`,
+    `${import.meta.env.BASE_URL}audio/distant_apartment_drone_2.mp3`,
+    `${import.meta.env.BASE_URL}audio/ghost_mall_pa_system_1.mp3`,
+    `${import.meta.env.BASE_URL}audio/ghost_mall_pa_system_2.mp3`
   ];
   private static readonly DEFAULT_VOLUME = 0.5;
   private static readonly MUTED_VOLUME = 0;

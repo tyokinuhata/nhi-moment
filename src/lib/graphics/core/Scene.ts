@@ -30,7 +30,7 @@ export class Scene {
   }
 
   private async selectRandomImageSet(): Promise<void> {
-    const anomaliesConfig = await (await fetch('/images/anomalies.json')).json();
+    const anomaliesConfig = await (await fetch(`${import.meta.env.BASE_URL}images/anomalies.json`)).json();
     const imageSetIds = Object.keys(anomaliesConfig);
     const randomIndex = Math.floor(Math.random() * imageSetIds.length);
     this.currentImageSetId = imageSetIds[randomIndex];
@@ -38,8 +38,8 @@ export class Scene {
   }
 
   private async loadTextures(): Promise<void> {
-    const textureBefore = await Assets.load(`/images/${this.currentImageSetId}/before.png`);
-    const textureAfter = await Assets.load(`/images/${this.currentImageSetId}/after.png`);
+    const textureBefore = await Assets.load(`${import.meta.env.BASE_URL}images/${this.currentImageSetId}/before.png`);
+    const textureAfter = await Assets.load(`${import.meta.env.BASE_URL}images/${this.currentImageSetId}/after.png`);
 
     this.spriteBefore = Sprite.from(textureBefore);
     this.spriteAfter = Sprite.from(textureAfter);
